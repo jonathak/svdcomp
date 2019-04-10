@@ -6,8 +6,11 @@ defmodule Svdcomp.Application do
   use Application
 
   def start(_type, _args) do
+    :inets.start()
+    :ssl.start()
     # List all child processes to be supervised
     children = [
+      {Plug.Cowboy, scheme: :http, plug: Bumper.Router, options: [port: 8050]}
       # Starts a worker by calling: Svdcomp.Worker.start_link(arg)
       # {Svdcomp.Worker, arg}
     ]
